@@ -25,4 +25,14 @@ public final class Constants {
     
         public static final int[] SHIFTER_SOLENOID = {6,7};
     }
+
+    public final static class IntakeConstants {
+
+        public final static int INTAKE_FALCON = 1; //placeholder
+        public final static int[] INTAKE_PISTONS_SOLENOID = {0, 1};//placeholder
+
+        public final static double ROLL_IN_SPEED = 0.2;
+        public final static double ROLL_OUT_SPEED = -0.2;
+
+    }
 }

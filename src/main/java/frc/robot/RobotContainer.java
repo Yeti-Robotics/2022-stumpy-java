@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.intake.TestIntakeCommand;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShiftSubsystem;
 
 /**
@@ -23,7 +25,9 @@ import frc.robot.subsystems.ShiftSubsystem;
 public class RobotContainer {
   private DrivetrainSubsystem drivetrainSubsystem;
   private Joystick driverStationJoy;
+
   public ShiftSubsystem shiftSubsystem;
+  private IntakeSubsystem intakeSubsystem;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -34,6 +38,7 @@ public class RobotContainer {
     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
     
     shiftSubsystem = new ShiftSubsystem();
+    intakeSubsystem = new IntakeSubsystem();
 
     configureButtonBindings();
   }
@@ -45,6 +50,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+      setJoystickButtonWhileHeld(driverStationJoy, 1, new TestIntakeCommand(intakeSubsystem, 0.2));
+      setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.2));
+
       setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
   }
   
@@ -64,8 +73,11 @@ public class RobotContainer {
     }
   }
   private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
-    new JoystickButton(driverStationJoy, i).whenPressed(command);
   }
+  private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
+  }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
