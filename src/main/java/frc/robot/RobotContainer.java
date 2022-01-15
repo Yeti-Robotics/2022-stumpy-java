@@ -73,8 +73,10 @@ public class RobotContainer {
     }
   }
   private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
+    new JoystickButton(driverStationJoy, i).whenPressed(command);
   }
   private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
+    new JoystickButton(driverStationJoy, i).whileHeld(command);
   }
 
 
