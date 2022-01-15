@@ -43,8 +43,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(double leftPower, double rightPower){
-    rightMotor1.set(ControlMode.PercentOutput, rightPower);
-    leftMotor1.set(ControlMode.PercentOutput, leftPower);
+    rightMotor3.set(ControlMode.PercentOutput, rightPower);
+    leftMotor3.set(ControlMode.PercentOutput, leftPower);
   }
 
   @Override
