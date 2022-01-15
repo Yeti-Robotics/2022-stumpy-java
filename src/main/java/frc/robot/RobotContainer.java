@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShiftSubsystem;
@@ -43,12 +45,9 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-      setJoystickButtonWhenPressed(driverStationJoy, 1, new ToggleShiftCommand(shiftSubsystem));
-
-
-
+      setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
   }
-
+  
   
   public double getLeftY() {
     if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1) {
@@ -64,7 +63,8 @@ public class RobotContainer {
         return 0;
     }
   }
-  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, ToggleShiftCommand toggleShiftCommand) {
+  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
+    new JoystickButton(driverStationJoy, i).whenPressed(command);
   }
 
   /**

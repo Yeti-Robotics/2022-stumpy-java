@@ -4,8 +4,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConstants;
 
-import frc.robot.Constants.ShifterConstants;
 
 public class ShiftSubsystem extends SubsystemBase {
     private DoubleSolenoid shifter;
@@ -15,7 +15,7 @@ public class ShiftSubsystem extends SubsystemBase {
     public static ShiftStatus shiftStatus;
 
     public ShiftSubsystem() {
-        shifter = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, ShifterConstants.SHIFTER_SOLENOID[0], ShifterConstants.SHIFTER_SOLENOID[1]);
+        shifter = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, DrivetrainConstants.SHIFTER_SOLENOID[0], DrivetrainConstants.SHIFTER_SOLENOID[1]);
         shiftStatus = ShiftStatus.LOW;
     }
 

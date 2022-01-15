@@ -22,13 +22,7 @@ public final class Constants {
         public final static int RIGHT_MOTOR_1 = 3;
         public final static int RIGHT_MOTOR_2 = 8;
         public final static int RIGHT_MOTOR_3 = 6;
-    }
-
-    public final static class ShifterConstants {
-     public static final int[] SHIFTER_SOLENOID = {0,1};
-
-     
-
-
+    
+        public static final int[] SHIFTER_SOLENOID = {6,7};
     }
 }

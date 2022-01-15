@@ -29,10 +29,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     leftMotor2.setInverted(true);
     leftMotor3.setInverted(true);
 
-    rightMotor2.follow(rightMotor1);
-    rightMotor3.follow(rightMotor1);
-    leftMotor2.follow(leftMotor1);
-    leftMotor3.follow(leftMotor1);
+    rightMotor2.follow(rightMotor3);
+    rightMotor1.follow(rightMotor3);
+    leftMotor2.follow(leftMotor3);
+    leftMotor1.follow(leftMotor3);
 
     leftMotor1.setNeutralMode(NeutralMode.Brake);
     leftMotor2.setNeutralMode(NeutralMode.Brake);
