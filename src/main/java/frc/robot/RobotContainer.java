@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.ShiftSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -19,16 +21,19 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  */
 public class RobotContainer {
   private DrivetrainSubsystem drivetrainSubsystem;
-  private Joystick driverstationJoy;
+  private Joystick driverStationJoy;
+  private ShiftSubsystem shiftSubsystem;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    driverstationJoy = new Joystick(0);
+    driverStationJoy = new Joystick(0);
     
     drivetrainSubsystem = new DrivetrainSubsystem();
 
     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
     
+    shiftSubsystem = new ShiftSubsystem();
+
     configureButtonBindings();
   }
 
@@ -38,21 +43,29 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+      setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
 
+
+
+  }
+
+  
   public double getLeftY() {
-    if(driverstationJoy.getRawAxis(0) >= .1 || driverstationJoy.getRawAxis(0) <= -.1) {
-        return driverstationJoy.getRawAxis(0);
+    if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1) {
+        return driverStationJoy.getRawAxis(0);
     } else {
         return 0;
     }
   }
   public double getRightY() {
-    if(driverstationJoy.getRawAxis(2) >= .1 || driverstationJoy.getRawAxis(2) <= -.1) {
-        return driverstationJoy.getRawAxis(2);
+    if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1) {
+        return driverStationJoy.getRawAxis(2);
     } else {
         return 0;
     }
+  }
+  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, ToggleShiftCommand toggleShiftCommand) {
   }
 
   /**
