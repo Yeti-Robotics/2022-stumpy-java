@@ -60,8 +60,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-      setJoystickButtonWhileHeld(driverStationJoy, 1, new TestIntakeCommand(intakeSubsystem, 0.2));
-      setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.2));
+      setJoystickButtonWhileHeld(driverStationJoy, 1, new TestIntakeCommand(intakeSubsystem, 0.6));
+      setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.6));
 
       setJoystickButtonWhileHeld(driverStationJoy, 3, new RollToTop(neckSubsystem));
       setJoystickButtonWhileHeld(driverStationJoy, 8, new RollToBottom(neckSubsystem));
@@ -69,6 +69,7 @@ public class RobotContainer {
       setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
 
       setJoystickButtonWhileHeld(driverStationJoy, 2, new SpinShooterCommand(shooterSubsystem, .6));
+      setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem, -.6));
   }
   
   
