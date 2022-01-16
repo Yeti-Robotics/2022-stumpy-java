@@ -27,8 +27,9 @@ public final class Constants {
     public final static class ShifterConstants {
      public static final int[] SHIFTER_SOLENOID = {0,1};
 
-     
-
-
+    }
+    public final static class NeckConstants {
+        public static final int NECK_MOTOR = 5; //placeholder
+        public static final int NECK_BEAMBREAK = 4;//placeholder
     }
 }

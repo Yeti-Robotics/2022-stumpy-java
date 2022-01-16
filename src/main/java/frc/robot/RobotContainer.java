@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.NeckSubsystem;
 import frc.robot.subsystems.ShiftSubsystem;
 
 /**
@@ -23,7 +24,7 @@ public class RobotContainer {
   private DrivetrainSubsystem drivetrainSubsystem;
   private Joystick driverStationJoy;
   private ShiftSubsystem shiftSubsystem;
-
+  public NeckSubsystem neckSubsystem;
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driverStationJoy = new Joystick(0);
@@ -33,6 +34,8 @@ public class RobotContainer {
     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
     
     shiftSubsystem = new ShiftSubsystem();
+
+    neckSubsystem = new NeckSubsystem();
 
     configureButtonBindings();
   }
