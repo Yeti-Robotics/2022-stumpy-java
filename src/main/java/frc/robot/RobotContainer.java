@@ -32,7 +32,6 @@ public class RobotContainer {
   public ShiftSubsystem shiftSubsystem;
   private IntakeSubsystem intakeSubsystem;
   private ShooterSubsystem shooterSubsystem;
-  private ShiftSubsystem shiftSubsystem;
   public NeckSubsystem neckSubsystem;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
