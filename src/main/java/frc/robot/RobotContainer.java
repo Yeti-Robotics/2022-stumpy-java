@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.TestIntakeCommand;
+import frc.robot.commands.neck.RollToBottom;
+import frc.robot.commands.neck.RollToTop;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.commands.shooter.SpinShooterCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -45,7 +47,6 @@ public class RobotContainer {
     shiftSubsystem = new ShiftSubsystem();
     intakeSubsystem = new IntakeSubsystem();
     shooterSubsystem = new ShooterSubsystem();
-
     neckSubsystem = new NeckSubsystem();
 
     configureButtonBindings();
@@ -61,6 +62,9 @@ public class RobotContainer {
 
       setJoystickButtonWhileHeld(driverStationJoy, 1, new TestIntakeCommand(intakeSubsystem, 0.2));
       setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.2));
+
+      setJoystickButtonWhileHeld(driverStationJoy, 3, new RollToTop(neckSubsystem));
+      setJoystickButtonWhileHeld(driverStationJoy, 8, new RollToBottom(neckSubsystem));
 
       setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
 

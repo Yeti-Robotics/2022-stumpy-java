@@ -4,8 +4,8 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,17 +13,20 @@ import frc.robot.Constants.NeckConstants;
 
 public class NeckSubsystem extends SubsystemBase {
   /** Creates a new NeckSubsystem. */
-  WPI_TalonFX neckRoller;
+  WPI_TalonSRX neckRollerFront, neckRollerBack;
   DigitalInput beamBreak;
   public NeckSubsystem() {
-    neckRoller = new WPI_TalonFX(NeckConstants.NECK_MOTOR);
+    neckRollerFront = new WPI_TalonSRX(NeckConstants.NECK_MOTOR);
+    neckRollerBack = new WPI_TalonSRX(NeckConstants.NECK_MOTOR);
     beamBreak = new DigitalInput(NeckConstants.NECK_BEAMBREAK);
   }
   public void spinNeck(double speed) {
-    neckRoller.set(speed);
+    neckRollerFront.set(speed);
+    neckRollerBack.set(-speed);
   }
   public void stopNeck() {
-    neckRoller.set(0);
+    neckRollerFront.set(0);
+    neckRollerBack.set(0);
   }
   public boolean getBeamBreak() {
     return beamBreak.get();
