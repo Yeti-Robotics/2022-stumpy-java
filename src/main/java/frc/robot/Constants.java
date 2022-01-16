@@ -35,4 +35,9 @@ public final class Constants {
         public final static double ROLL_OUT_SPEED = -0.2;
 
     }
+
+    public final static class ShooterConstants {
+        public final static int LEFT_SHOOTER_MOTOR = 0;
+        public final static int RIGHT_SHOOTER_MOTOR = 1;
+    }
 }

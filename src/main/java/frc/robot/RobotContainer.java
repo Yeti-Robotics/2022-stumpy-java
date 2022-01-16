@@ -12,9 +12,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.intake.TestIntakeCommand;
 import frc.robot.commands.shifting.ToggleShiftCommand;
+import frc.robot.commands.shooter.SpinShooterCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShiftSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,6 +30,7 @@ public class RobotContainer {
 
   public ShiftSubsystem shiftSubsystem;
   private IntakeSubsystem intakeSubsystem;
+  private ShooterSubsystem shooterSubsystem;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -39,6 +42,7 @@ public class RobotContainer {
     
     shiftSubsystem = new ShiftSubsystem();
     intakeSubsystem = new IntakeSubsystem();
+    shooterSubsystem = new ShooterSubsystem();
 
     configureButtonBindings();
   }
@@ -55,6 +59,8 @@ public class RobotContainer {
       setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.2));
 
       setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
+
+      setJoystickButtonWhileHeld(driverStationJoy, 2, new SpinShooterCommand(shooterSubsystem, .6));
   }
   
   
