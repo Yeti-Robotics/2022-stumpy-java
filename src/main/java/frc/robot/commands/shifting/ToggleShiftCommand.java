@@ -1,8 +1,7 @@
 package frc.robot.commands.shifting;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
+
 import frc.robot.subsystems.ShiftSubsystem;
 
 

@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -22,14 +22,27 @@ public final class Constants {
         public final static int RIGHT_MOTOR_1 = 3;
         public final static int RIGHT_MOTOR_2 = 8;
         public final static int RIGHT_MOTOR_3 = 6;
+    
+        public static final int[] SHIFTER_SOLENOID = {6,7};
     }
 
-    public final static class ShifterConstants {
-     public static final int[] SHIFTER_SOLENOID = {0,1};
+    public final static class IntakeConstants {
 
+        public final static int INTAKE_FALCON = 1; //placeholder
+        public final static int[] INTAKE_PISTONS_SOLENOID = {0, 1};//placeholder
+
+        public final static double ROLL_IN_SPEED = 0.2;
+        public final static double ROLL_OUT_SPEED = -0.2;
+
+    }
+
+    public final static class ShooterConstants {
+        public final static int LEFT_SHOOTER_MOTOR = 0;
+        public final static int RIGHT_SHOOTER_MOTOR = 1;
     }
     public final static class NeckConstants {
         public static final int NECK_MOTOR = 5; //placeholder
         public static final int NECK_BEAMBREAK = 4;//placeholder
+
     }
 }

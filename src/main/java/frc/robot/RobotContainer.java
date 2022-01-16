@@ -9,10 +9,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.intake.TestIntakeCommand;
 import frc.robot.commands.shifting.ToggleShiftCommand;
+import frc.robot.commands.shooter.SpinShooterCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeckSubsystem;
 import frc.robot.subsystems.ShiftSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,8 +28,13 @@ import frc.robot.subsystems.ShiftSubsystem;
 public class RobotContainer {
   private DrivetrainSubsystem drivetrainSubsystem;
   private Joystick driverStationJoy;
+
+  public ShiftSubsystem shiftSubsystem;
+  private IntakeSubsystem intakeSubsystem;
+  private ShooterSubsystem shooterSubsystem;
   private ShiftSubsystem shiftSubsystem;
   public NeckSubsystem neckSubsystem;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     driverStationJoy = new Joystick(0);
@@ -34,6 +44,8 @@ public class RobotContainer {
     drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
     
     shiftSubsystem = new ShiftSubsystem();
+    intakeSubsystem = new IntakeSubsystem();
+    shooterSubsystem = new ShooterSubsystem();
 
     neckSubsystem = new NeckSubsystem();
 
@@ -47,12 +59,15 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+      setJoystickButtonWhileHeld(driverStationJoy, 1, new TestIntakeCommand(intakeSubsystem, 0.2));
+      setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.2));
+
       setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
 
-
-
+      setJoystickButtonWhileHeld(driverStationJoy, 2, new SpinShooterCommand(shooterSubsystem, .6));
   }
-
+  
   
   public double getLeftY() {
     if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1) {
@@ -68,8 +83,14 @@ public class RobotContainer {
         return 0;
     }
   }
-  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, ToggleShiftCommand toggleShiftCommand) {
+  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
+    new JoystickButton(driverStationJoy, i).whenPressed(command);
   }
+  private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
+    new JoystickButton(driverStationJoy, i).whileHeld(command);
+  }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
@@ -29,10 +29,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     leftMotor2.setInverted(true);
     leftMotor3.setInverted(true);
 
-    rightMotor2.follow(rightMotor1);
-    rightMotor3.follow(rightMotor1);
-    leftMotor2.follow(leftMotor1);
-    leftMotor3.follow(leftMotor1);
+    rightMotor2.follow(rightMotor3);
+    rightMotor1.follow(rightMotor3);
+    leftMotor2.follow(leftMotor3);
+    leftMotor1.follow(leftMotor3);
 
     leftMotor1.setNeutralMode(NeutralMode.Brake);
     leftMotor2.setNeutralMode(NeutralMode.Brake);
@@ -43,8 +43,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(double leftPower, double rightPower){
-    rightMotor1.set(ControlMode.PercentOutput, rightPower);
-    leftMotor1.set(ControlMode.PercentOutput, leftPower);
+    rightMotor3.set(ControlMode.PercentOutput, rightPower);
+    leftMotor3.set(ControlMode.PercentOutput, leftPower);
   }
 
   @Override
