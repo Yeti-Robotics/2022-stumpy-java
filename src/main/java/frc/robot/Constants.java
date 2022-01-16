@@ -40,4 +40,9 @@ public final class Constants {
         public final static int LEFT_SHOOTER_MOTOR = 0;
         public final static int RIGHT_SHOOTER_MOTOR = 1;
     }
+    public final static class NeckConstants {
+        public static final int NECK_MOTOR = 5; //placeholder
+        public static final int NECK_BEAMBREAK = 4;//placeholder
+
+    }
 }
