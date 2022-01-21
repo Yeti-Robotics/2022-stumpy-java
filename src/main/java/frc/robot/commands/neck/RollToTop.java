@@ -21,7 +21,7 @@ public class RollToTop extends CommandBase {
   
   @Override
   public void execute() {
-    neckSubsystem.spinNeck(0.3);
+    neckSubsystem.spinNeck(0.6);
   }
 
   // Called once the command ends or is interrupted.
