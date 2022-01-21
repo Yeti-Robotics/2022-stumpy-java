@@ -46,4 +46,18 @@ public final class Constants {
         public static final int NECK_BEAMBREAK = 4;//placeholder
 
     }
+
+
+    public static final class CalcConstants{
+        //distance calc constants
+        public static final double KNOWN_DISTANCE = 161.3; //inches
+        public static final int PIXEL_WIDTH_KNOWN = 8; //pixels (This is a placeholder value)
+        public static final double KNOWN_TAPE_BOUND_WIDTH = 5; //inches
+        public static final double FOCAL_LENGTH = ( KNOWN_DISTANCE * PIXEL_WIDTH_KNOWN) / KNOWN_TAPE_BOUND_WIDTH;
+        //trajectory constants
+        public static final double GRAVITY = 386.09; // inches/ sec ^2
+        public static final double SHOOTER_HEIGHT = 30; // inches
+    }
+
+
 }
