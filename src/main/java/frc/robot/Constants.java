@@ -17,7 +17,7 @@ package frc.robot;
 public final class Constants {
     public final static class DrivetrainConstants {
         public final static int LEFT_MOTOR_1 = 13;
-        public final static int LEFT_MOTOR_2 = 1;
+        public final static int LEFT_MOTOR_2 = 16;
         public final static int LEFT_MOTOR_3 = 7;
         public final static int RIGHT_MOTOR_1 = 3;
         public final static int RIGHT_MOTOR_2 = 8;
@@ -28,7 +28,7 @@ public final class Constants {
 
     public final static class IntakeConstants {
 
-        public final static int INTAKE_FALCON = 1; //placeholder
+        public final static int INTAKE_FALCON = 19; //placeholder
         public final static int[] INTAKE_PISTONS_SOLENOID = {0, 1};//placeholder
 
         public final static double ROLL_IN_SPEED = 0.2;
@@ -37,11 +37,12 @@ public final class Constants {
     }
 
     public final static class ShooterConstants {
-        public final static int LEFT_SHOOTER_MOTOR = 0;
+        public final static int LEFT_SHOOTER_MOTOR = 18;
         public final static int RIGHT_SHOOTER_MOTOR = 1;
     }
     public final static class NeckConstants {
-        public static final int NECK_MOTOR = 5; //placeholder
+        public static final int NECK_MOTOR_FRONT = 17; //placeholder
+        public static final int NECK_MOTOR_BACK = 15;//PLACEHOLDER   `
         public static final int NECK_BEAMBREAK = 4;//placeholder
 
     }
