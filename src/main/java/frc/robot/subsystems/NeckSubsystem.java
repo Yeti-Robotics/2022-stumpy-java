@@ -21,7 +21,7 @@ public class NeckSubsystem extends SubsystemBase {
     beamBreak = new DigitalInput(NeckConstants.NECK_BEAMBREAK);
   }
   public void spinNeck(double speed) {
-    neckRollerFront.set(speed);
+    neckRollerFront.set(-speed);
     neckRollerBack.set(-speed);
   }
   public void stopNeck() {
