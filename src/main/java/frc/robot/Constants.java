@@ -36,9 +36,17 @@ public final class Constants {
 
     }
 
-    public final static class ShooterConstants {
+    public final static class   ShooterConstants {
         public final static int LEFT_SHOOTER_MOTOR = 18;
         public final static int RIGHT_SHOOTER_MOTOR = 1;
+        public final static double REVERSE_SHOOT_SPEED = -1.0;
+
+        public final static double MAX_RPM = 6500.0;
+        public static final double ENCODER_RESOLUTION = 2048.0;
+        public static final double PULLEY_RATIO = 48.0 / 36.0;
+        public static final double ENCODER_TIME_CONVERSION = 600.0; // minutes per 100 ms
+
+
     }
     public final static class NeckConstants {
         public static final int NECK_MOTOR_FRONT = 17; //placeholder
