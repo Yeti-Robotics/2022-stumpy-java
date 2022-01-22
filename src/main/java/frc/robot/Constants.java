@@ -51,7 +51,7 @@ public final class Constants {
     public final static class NeckConstants {
         public static final int NECK_MOTOR_FRONT = 17; //placeholder
         public static final int NECK_MOTOR_BACK = 15;//PLACEHOLDER   `
-        public static final int NECK_BEAMBREAK = 4;//placeholder
+        public static final int NECK_BEAMBREAK = 0;//placeholder
 
     }
 
