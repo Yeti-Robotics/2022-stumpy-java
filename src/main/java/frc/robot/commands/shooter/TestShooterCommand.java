@@ -2,22 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.NeckSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
-public class AllInCommand extends CommandBase {
- private final IntakeSubsystem intakeSubsystem;
- private final NeckSubsystem neckSubsystem;
+public class TestShooterCommand extends CommandBase {
+  /** Creates a new TestShooterCommand. */
+  private final ShooterSubsystem shooterSubsystem;
 
- public AllInCommand(NeckSubsystem neckSubsystem, IntakeSubsystem intakeSubsystem) {
-  this.neckSubsystem = neckSubsystem;
-  this.intakeSubsystem = intakeSubsystem;
-  addRequirements(neckSubsystem, intakeSubsystem); 
- }
+  public  TestShooterCommand(ShooterSubsystem shooterSubsystem) {
+    this.shooterSubsystem = shooterSubsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -25,15 +23,13 @@ public class AllInCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    neckSubsystem.spinNeck(0.3);
-    intakeSubsystem.intakeIn();
+    shooterSubsystem.shootFlywheel(-0.9);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    neckSubsystem.stopNeck();
-    intakeSubsystem.intakeStop();
+    shooterSubsystem.stopFlywheel();
   }
 
   // Returns true when the command should end.

@@ -31,8 +31,8 @@ public final class Constants {
         public final static int INTAKE_FALCON = 19; //placeholder
         public final static int[] INTAKE_PISTONS_SOLENOID = {0, 1};//placeholder
 
-        public final static double ROLL_IN_SPEED = 0.2;
-        public final static double ROLL_OUT_SPEED = -0.2;
+        public final static double ROLL_IN_SPEED = 0.5;
+        public final static double ROLL_OUT_SPEED = -0.5;
 
     }
 
