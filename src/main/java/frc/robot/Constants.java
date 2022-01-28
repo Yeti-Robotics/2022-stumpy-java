@@ -46,6 +46,11 @@ public final class Constants {
 
     }
 
+    public final static class LEDConstants {
+        public static final int Addressable_LED = 9; //placeholder
+        public static final int LED_Count = 60; //placeholder 
+    }
+
 
     public static final class CalcConstants{
         //distance calc constants
