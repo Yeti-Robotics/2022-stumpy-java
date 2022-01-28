@@ -15,14 +15,14 @@ public class SpinShooterCommand extends PIDCommand {
   private final double power;
   public SpinShooterCommand(ShooterSubsystem shooterSubsystem, double power) {
     super(
-      new PIDController(0.001, 0.0, 0.0),
+      new PIDController(0.0005, 0.0, 0.0),
       shooterSubsystem::getFlywheelRPM,
       ShooterConstants.MAX_RPM,
       output -> {
         // Use the output here
         System.out.println("Shooter PID Output: " + output);
         System.out.println("Flywheel RPM: " + shooterSubsystem.getFlywheelRPM());
-        shooterSubsystem.shootFlywheel(0.85 + output);
+        shooterSubsystem.shootFlywheel(0.65 + output);
       }
     );
     this.shooterSubsystem = shooterSubsystem;
@@ -32,18 +32,18 @@ public class SpinShooterCommand extends PIDCommand {
     addRequirements(shooterSubsystem);
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-  }
+  // // Called when the command is initially scheduled.
+  // @Override
+  // public void initialize() {
+  // }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    shooterSubsystem.shootFlywheel(power);
-  }
+  // // Called every time the scheduler runs while the command is scheduled.
+  // @Override
+  // public void execute() {
+  //   shooterSubsystem.shootFlywheel(power);
+  // }
 
-  // Called once the command ends or is interrupted.
+  // // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.shootFlywheel(0);

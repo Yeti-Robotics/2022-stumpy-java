@@ -31,8 +31,8 @@ public class ShooterSubsystem extends SubsystemBase {
         rightFlywheel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         leftFlywheel.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
         
-        rightFlywheel.follow(leftFlywheel);
-        rightFlywheel.setInverted(InvertType.OpposeMaster);
+        leftFlywheel.follow(rightFlywheel);
+        leftFlywheel.setInverted(InvertType.OpposeMaster);
     
         shooterStatus = ShooterStatus.OFF;
 
