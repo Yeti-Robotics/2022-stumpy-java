@@ -16,12 +16,12 @@ public class NeckSubsystem extends SubsystemBase {
   WPI_TalonSRX neckRollerFront, neckRollerBack;
   DigitalInput beamBreak;
   public NeckSubsystem() {
-    neckRollerFront = new WPI_TalonSRX(NeckConstants.NECK_MOTOR);
-    neckRollerBack = new WPI_TalonSRX(NeckConstants.NECK_MOTOR);
+    neckRollerFront = new WPI_TalonSRX(NeckConstants.NECK_MOTOR_FRONT);
+    neckRollerBack = new WPI_TalonSRX(NeckConstants.NECK_MOTOR_BACK);
     beamBreak = new DigitalInput(NeckConstants.NECK_BEAMBREAK);
   }
   public void spinNeck(double speed) {
-    neckRollerFront.set(speed);
+    neckRollerFront.set(-speed);
     neckRollerBack.set(-speed);
   }
   public void stopNeck() {

@@ -45,9 +45,9 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
 
-    System.out.println("Shifter Position: " + m_robotContainer.shiftSubsystem.getShifterPosition());
+    // System.out.println("Shifter Position: " + m_robotContainer.shiftSubsystem.getShifterPosition());
 
-    System.out.println("Beam Break Status:" + m_robotContainer.neckSubsystem.getBeamBreak());
+    // System.out.println("Beam Break Status:" + m_robotContainer.neckSubsystem.getBeamBreak());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
