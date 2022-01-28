@@ -10,11 +10,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AllInCommand;
+import frc.robot.commands.intake.IntakeStopCommand;
 import frc.robot.commands.intake.TestIntakeCommand;
 import frc.robot.commands.neck.RollToBottom;
 import frc.robot.commands.neck.RollToTop;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.commands.shooter.SpinShooterCommand;
+import frc.robot.commands.shooter.TestShooterCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeckSubsystem;
@@ -60,16 +63,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-      setJoystickButtonWhileHeld(driverStationJoy, 1, new TestIntakeCommand(intakeSubsystem, 0.5));
-      setJoystickButtonWhileHeld(driverStationJoy, 6, new TestIntakeCommand(intakeSubsystem, -0.5));
+      setJoystickButtonWhileHeld(driverStationJoy, 2, new TestIntakeCommand(intakeSubsystem, 0.5));
+       setJoystickButtonWhileHeld(driverStationJoy, 7, new TestIntakeCommand(intakeSubsystem, -0.5));
+        setJoystickButtonWhileHeld(driverStationJoy, 1,  new RollToTop(neckSubsystem, intakeSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 6, new AllInCommand(neckSubsystem, intakeSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoy, 3, new IntakeStopCommand(intakeSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoy, 3, new RollToTop(neckSubsystem,intakeSubsystem));
+      // setJoystickButtonWhileHeld(driverStationJoy, 8, new RollToBottom(neckSubsystem));
 
-      setJoystickButtonWhileHeld(driverStationJoy, 3, new RollToTop(neckSubsystem));
-      setJoystickButtonWhileHeld(driverStationJoy, 8, new RollToBottom(neckSubsystem));
+      // setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
 
-      setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
-
-      setJoystickButtonWhileHeld(driverStationJoy, 2, new SpinShooterCommand(shooterSubsystem, .7));
-      setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem, -.7));
+      setJoystickButtonWhileHeld(driverStationJoy, 5, new TestShooterCommand(shooterSubsystem));
+      // setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem, -.7));
   }
   
   

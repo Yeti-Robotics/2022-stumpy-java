@@ -31,8 +31,8 @@ public final class Constants {
         public final static int INTAKE_FALCON = 19; //placeholder
         public final static int[] INTAKE_PISTONS_SOLENOID = {0, 1};//placeholder
 
-        public final static double ROLL_IN_SPEED = 0.2;
-        public final static double ROLL_OUT_SPEED = -0.2;
+        public final static double ROLL_IN_SPEED = 0.5;
+        public final static double ROLL_OUT_SPEED = -0.5;
 
     }
 
@@ -51,20 +51,20 @@ public final class Constants {
     public final static class NeckConstants {
         public static final int NECK_MOTOR_FRONT = 17; //placeholder
         public static final int NECK_MOTOR_BACK = 15;//PLACEHOLDER   `
-        public static final int NECK_BEAMBREAK = 4;//placeholder
+        public static final int NECK_BEAMBREAK = 0;
 
     }
 
 
     public static final class CalcConstants{
         //distance calc constants
-        public static final double KNOWN_DISTANCE = 161.3; //inches
+        public static final double KNOWN_DISTANCE = 134.2; //inches
         public static final int PIXEL_WIDTH_KNOWN = 8; //pixels (This is a placeholder value)
         public static final double KNOWN_TAPE_BOUND_WIDTH = 5; //inches
         public static final double FOCAL_LENGTH = ( KNOWN_DISTANCE * PIXEL_WIDTH_KNOWN) / KNOWN_TAPE_BOUND_WIDTH;
         //trajectory constants
         public static final double GRAVITY = 386.09; // inches/ sec ^2
-        public static final double SHOOTER_HEIGHT = 30; // inches
+        public static final double SHOOTER_HEIGHT = 34; // inches
     }
 
 
