@@ -25,9 +25,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightMotor2 = new WPI_TalonSRX(DrivetrainConstants.RIGHT_MOTOR_2);
     rightMotor3 = new WPI_TalonSRX(DrivetrainConstants.RIGHT_MOTOR_3);
 
-    leftMotor1.setInverted(true);
-    leftMotor2.setInverted(true);
-    leftMotor3.setInverted(true);
+    rightMotor1.setInverted(true);
+    rightMotor2.setInverted(true);
+    rightMotor3.setInverted(true);
 
     rightMotor2.follow(rightMotor3);
     rightMotor1.follow(rightMotor3);

@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AllInCommand;
 import frc.robot.commands.intake.IntakeStopCommand;
 import frc.robot.commands.intake.TestIntakeCommand;
-import frc.robot.commands.neck.RollToBottom;
 import frc.robot.commands.neck.RollToTop;
-import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.commands.shooter.SpinShooterCommand;
 import frc.robot.commands.shooter.TestShooterCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -73,37 +71,31 @@ public class RobotContainer {
 
       // setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
 
-      setJoystickButtonWhileHeld(driverStationJoy, 5, new TestShooterCommand(shooterSubsystem));
-      // setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem, -.7));
+      setJoystickButtonWhileHeld(driverStationJoy, 5, new TestShooterCommand(shooterSubsystem, 0.5));
+      setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem));
   }
   
   
   public double getLeftY() {
-    if(driverStationJoy.getRawAxis(0) >= .1 || driverStationJoy.getRawAxis(0) <= -.1) {
-        return driverStationJoy.getRawAxis(0);
-    } else {
-        return 0;
-    }
+      return -driverStationJoy.getRawAxis(0);
   }
+
+  public double getLeftX() {
+      return driverStationJoy.getRawAxis(1);
+  }
+
   public double getRightY() {
-    if(driverStationJoy.getRawAxis(2) >= .1 || driverStationJoy.getRawAxis(2) <= -.1) {
-        return driverStationJoy.getRawAxis(2);
-    } else {
-        return 0;
-    }
+      return -driverStationJoy.getRawAxis(2);
   }
+
+  public double getRightX() {
+      return driverStationJoy.getRawAxis(3);
+  }
+
   private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
     new JoystickButton(driverStationJoy, i).whenPressed(command);
   }
   private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
     new JoystickButton(driverStationJoy, i).whileHeld(command);
   }
-
-
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
 }

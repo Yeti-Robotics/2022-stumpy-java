@@ -8,31 +8,28 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class TestShooterCommand extends CommandBase {
-  /** Creates a new TestShooterCommand. */
-  private final ShooterSubsystem shooterSubsystem;
+  private ShooterSubsystem shooterSubsystem;
+  private double power;
 
-  public  TestShooterCommand(ShooterSubsystem shooterSubsystem) {
+  public TestShooterCommand(ShooterSubsystem shooterSubsystem, double power) {
     this.shooterSubsystem = shooterSubsystem;
-    // Use addRequirements() here to declare subsystem dependencies.
+    this.power = power;
+    addRequirements(shooterSubsystem);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.shootFlywheel(-0.9);
+    shooterSubsystem.shootFlywheel(power);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooterSubsystem.stopFlywheel();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
