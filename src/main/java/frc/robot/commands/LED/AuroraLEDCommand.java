@@ -55,20 +55,20 @@ public class AuroraLEDCommand extends CommandBase {
   }
 
   private int[][] calcGradientColors(int[] color1, int[] color2) {
-    int[][] gradientColors = new int[gradientLength][3];
+    var gradientColors = new int[gradientLength][3];
 
     final int centerIndex = (gradientLength - 1) / 2;
 
-    int[] leftColor = getAvgValue(color1, color2);
-    int[] rightColor = getAvgValue(color1, color2);
+    var leftColor = getAvgValue(color1, color2);
+    var rightColor = getAvgValue(color1, color2);
 
     // if odd num of gradient leds set the middle to avg of both sides
     if (gradientLength % 2 != 0) gradientColors[centerIndex] = leftColor;
 
-    for (int i = 0; i < Math.floor(gradientLength / 2); i++) {
+    for (var i = 0; i < Math.floor(gradientLength / 2); i++) {
       rightColor = getAvgValue(rightColor, color2);
       leftColor = getAvgValue(color1, leftColor);
-      int placementIndex = i + 1;
+      var placementIndex = i + 1;
       gradientColors[(int) Math.floor(centerIndex + placementIndex)] = rightColor;
       gradientColors[(int) Math.ceil(centerIndex - placementIndex)] = leftColor;
     }
