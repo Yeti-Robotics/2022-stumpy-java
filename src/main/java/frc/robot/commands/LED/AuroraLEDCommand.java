@@ -12,30 +12,27 @@ public class AuroraLEDCommand extends CommandBase {
   /** Creates a new AuroraLEDCommand. */
   private LEDSubsystem ledSubsystem;
 
-  // HSV
+  // RGB
   private int[] mintGreen = {30, 222, 32};
   private int mintGreenPinkBoundary = LEDConstants.LED_COUNT / 8;
-
-  private int[][] mintGreenPinkGradient;
-
+  
   private int[] pink = {199, 68, 235};
   private int pinkLightBlueBoundary = LEDConstants.LED_COUNT / 4;
-
-  private int[][] pinkLightBlueGradient;
-
+  
   private int[] lightBlue = {4, 255, 219};
   private int lightBlueDarkBlueBoundary = (3 * LEDConstants.LED_COUNT) / 8;
-
-  private int[][] lightBlueDarkBlueGradient;
-
+  
   private int[] darkBlue = {62, 0, 216};
   private int darkBlueMintGreenBoundary = LEDConstants.LED_COUNT / 2;
-
-  private int[][] darkBlueMintGreenGradient;
+  
+  private int gradientLength = 4;
+  private int[][] mintGreenPinkGradient = calcGradientColors(mintGreen, pink);
+  private int[][] pinkLightBlueGradient = calcGradientColors(pink, lightBlue);
+  private int[][] lightBlueDarkBlueGradient = calcGradientColors(lightBlue, darkBlue);
+  private int[][] darkBlueMintGreenGradient = calcGradientColors(darkBlue, mintGreen);
 
   private int position = 0;
 
-  private int gradientLength = 4;
   private long startTime = System.currentTimeMillis();
   private int waitTime = 50;
 
@@ -47,12 +44,7 @@ public class AuroraLEDCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    mintGreenPinkGradient = calcGradientColors(mintGreen, pink);
-    pinkLightBlueGradient = calcGradientColors(pink, lightBlue);
-    lightBlueDarkBlueGradient = calcGradientColors(lightBlue, darkBlue);
-    darkBlueMintGreenGradient = calcGradientColors(darkBlue, mintGreen);
-  }
+  public void initialize() {}
 
   private int wrapValues(int num) {
     return num % LEDConstants.LED_COUNT;
