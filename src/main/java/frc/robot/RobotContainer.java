@@ -4,98 +4,169 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import java.util.HashMap;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AllInCommand;
-import frc.robot.commands.intake.IntakeStopCommand;
-import frc.robot.commands.intake.TestIntakeCommand;
-import frc.robot.commands.neck.RollToTop;
-import frc.robot.commands.shooter.SpinShooterCommand;
-import frc.robot.commands.shooter.TestShooterCommand;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.NeckSubsystem;
-import frc.robot.subsystems.ShiftSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.commands.LED.AuroraLEDCommand;
+import frc.robot.commands.LED.BlinkLEDCommand;
+import frc.robot.commands.LED.RainbowLEDCommand;
+import frc.robot.commands.LED.SetLEDYetiBlueCommand;
+import frc.robot.commands.LED.SnowfallLEDCommand;
+import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.utils.XboxDPad;
+import frc.robot.utils.XboxDPad.Direction;
+import frc.robot.utils.XboxTrigger;
+import frc.robot.utils.XboxTrigger.Hand;
+
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private DrivetrainSubsystem drivetrainSubsystem;
-  private Joystick driverStationJoy;
+    // The robot's subsystems and commands are defined here...
+    private CommandScheduler commandScheduler;
+    public Joystick driverStationJoystick;
+    private XboxController xboxController; 
+    private XboxTrigger rightTrigger; 
+    private XboxTrigger leftTrigger;
+    public boolean isDriverStation;
 
-  public ShiftSubsystem shiftSubsystem;
-  private IntakeSubsystem intakeSubsystem;
-  private ShooterSubsystem shooterSubsystem;
-  public NeckSubsystem neckSubsystem;
+    public LEDSubsystem ledSubsystem;
+    private HashMap<Integer, CommandBase> buttonMap;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    driverStationJoy = new Joystick(0);
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        commandScheduler = CommandScheduler.getInstance();
+        
+        isDriverStation = !(DriverStation.getJoystickIsXbox(0) || DriverStation.getJoystickIsXbox(1)); 
+
+        ledSubsystem = new LEDSubsystem();
+        buttonMap = new HashMap<>();
+
+        ledSubsystem.setDefaultCommand(new SetLEDYetiBlueCommand(ledSubsystem));
+        
+        // Configure the button bindings
+        configureButtonBindings();
+    }
     
-    drivetrainSubsystem = new DrivetrainSubsystem();
+    private void configureButtonBindings() {
+        // POWER PORT ROBOT CONTROLS
+        // setJoystickButtonWhenPressed(driverStationJoystick, 1, new TurnToTargetPIDCommand(turretSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 2, new ToggleIntakePistonCommand(intakeSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 3, new AllInCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 4, new ToggleShooterCommand(shooterSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 5, new AllOutCommand(pinchRollerSubsystem, intakeSubsystem, hopperSubsystem));
+        // setJoystickButtonWhenPressed(driverStationJoystick, 6, new StopShooterCommand(shooterSubsystem));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 7, new TestHoodCommand(hoodSubsystem, .1));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 8, new TestHoodCommand(hoodSubsystem, -.1));
+        // setJoystickButtonWhileHeld(driverStationJoystick, 9, new TurretTestCommand(turretSubsystem, -0.2)); //left
+        // setJoystickButtonWhileHeld(driverStationJoystick, 10, new TurretTestCommand(turretSubsystem, 0.2)); //right
+        // setJoystickButtonWhileHeld(driverStationJoystick, 11, new IntakeInCommand(intakeSubsystem));
+            /*  
+                Allowed buttons:
+                kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
+            */
+            int port = (DriverStation.getJoystickIsXbox(0)) ? 0 : 1;
+            xboxController = new XboxController(port); 
+            rightTrigger = new XboxTrigger(xboxController, Hand.RIGHT);
+            leftTrigger = new XboxTrigger(xboxController, Hand.LEFT);
+            
+            setXboxButtonWhenPressed(xboxController, Button.kA, new SnowfallLEDCommand(ledSubsystem, 100));
+            setXboxButtonWhenPressed(xboxController, Button.kB, new RainbowLEDCommand(ledSubsystem, 4));
+            setXboxButtonWhenPressed(xboxController, Button.kY, new BlinkLEDCommand(ledSubsystem, 300, 255, 34, 0).withTimeout(5));// up
+            setXboxButtonWhenPressed(xboxController, Button.kX, new AuroraLEDCommand(ledSubsystem));// down
+    }
 
-    drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
-    
-    shiftSubsystem = new ShiftSubsystem();
-    intakeSubsystem = new IntakeSubsystem();
-    shooterSubsystem = new ShooterSubsystem();
-    neckSubsystem = new NeckSubsystem();
+    public double getLeftY() {
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(0) : -xboxController.getLeftY();
+    }
 
-    configureButtonBindings();
-  }
+    public double getLeftX() {
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(1) : -xboxController.getLeftX();
+    }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
+    public double getRightY() {
+        return (isDriverStation) ? -driverStationJoystick.getRawAxis(2) : -xboxController.getRightY();
+    }
 
-      setJoystickButtonWhileHeld(driverStationJoy, 2, new TestIntakeCommand(intakeSubsystem, 0.5));
-       setJoystickButtonWhileHeld(driverStationJoy, 7, new TestIntakeCommand(intakeSubsystem, -0.5));
-        setJoystickButtonWhileHeld(driverStationJoy, 1,  new RollToTop(neckSubsystem, intakeSubsystem));
-        setJoystickButtonWhileHeld(driverStationJoy, 6, new AllInCommand(neckSubsystem, intakeSubsystem));
-        setJoystickButtonWhenPressed(driverStationJoy, 3, new IntakeStopCommand(intakeSubsystem));
-        // setJoystickButtonWhileHeld(driverStationJoy, 3, new RollToTop(neckSubsystem,intakeSubsystem));
-      // setJoystickButtonWhileHeld(driverStationJoy, 8, new RollToBottom(neckSubsystem));
+    public double getRightX() {
+        return (isDriverStation) ? driverStationJoystick.getRawAxis(3) : -xboxController.getRightX();
+    }
 
-      // setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
+    public HashMap<Integer, CommandBase> getButtonMap() {
+        return buttonMap;
+    }
 
-      setJoystickButtonWhileHeld(driverStationJoy, 5, new TestShooterCommand(shooterSubsystem, 0.5));
-      setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem));
-  }
-  
-  
-  public double getLeftY() {
-      return -driverStationJoy.getRawAxis(0);
-  }
+    private void setJoystickButtonWhenPressed(Joystick joystick, int button, CommandBase command) {
+        new JoystickButton(joystick, button).whenPressed(command);
+        buttonMap.put(button, command);
+    }
 
-  public double getLeftX() {
-      return driverStationJoy.getRawAxis(1);
-  }
+    private void setJoystickButtonWhileHeld(Joystick joystick, int button, CommandBase command) {
+        new JoystickButton(joystick, button).whileHeld(command);
+        buttonMap.put(button, command);
+    }
 
-  public double getRightY() {
-      return -driverStationJoy.getRawAxis(2);
-  }
+    // Xbox controller equivalents
+    private void setXboxButtonWhenPressed(XboxController xboxController, XboxController.Button button, CommandBase command) {
+        new JoystickButton(xboxController, button.value).whenPressed(command);
+    }
 
-  public double getRightX() {
-      return driverStationJoy.getRawAxis(3);
-  }
+    private void setXboxButtonWhileHeld(XboxController xboxController, XboxController.Button button, CommandBase command) {
+        new JoystickButton(xboxController, button.value).whileHeld(command);
+    }
 
-  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
-    new JoystickButton(driverStationJoy, i).whenPressed(command);
-  }
-  private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
-    new JoystickButton(driverStationJoy, i).whileHeld(command);
-  }
+    private void setXboxTriggerWhenPressed(Hand triggerSide, CommandBase command){
+        if(triggerSide == Hand.LEFT){ 
+            leftTrigger.whenActive(command);
+        } else {
+            rightTrigger.whenActive(command);
+        }
+    }
+
+    private void setXboxTriggerWhileHeld(Hand triggerSide, CommandBase command){
+        if(triggerSide == Hand.LEFT){ 
+            leftTrigger.whileActiveContinuous(command);
+        } else {
+            rightTrigger.whileActiveContinuous(command);
+        }
+    }
+
+    private void setXboxDPadWhenPressed(Direction direction, CommandBase command) {
+        new XboxDPad(xboxController, direction).whenPressed(command);
+    }
+
+    private void setXboxDPadWhileHeld(Direction direction, CommandBase command) {
+        new XboxDPad(xboxController, direction).whileHeld(command);
+    }
+
+    public void updateIsDriverStation(){
+        boolean prev = isDriverStation;
+        isDriverStation = !(DriverStation.getJoystickIsXbox(0) || DriverStation.getJoystickIsXbox(1));
+        if (prev == isDriverStation) {
+            return;
+        } else {
+            commandScheduler.clearButtons();
+            configureButtonBindings();
+        }
+    }
+
+    // public Command getAutonomousCommand() {}
+
+    public boolean getButtonStatus(Joystick joystick, int button) {
+        return driverStationJoystick.getRawButton(button);
+    }
 }

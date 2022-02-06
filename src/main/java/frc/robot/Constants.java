@@ -26,6 +26,21 @@ public final class Constants {
         public static final int[] SHIFTER_SOLENOID = {6,7};
     }
 
+    public static final class OIConstants {
+        public static final int kDriverControllerPort = 1;
+        //driver station constants
+        public static final int RIGHT_JOYSTICK = 1;
+        public static final int LEFT_JOYSTICK = 0;
+        public static final int SECONDARY_JOYSTICK = 2;
+        public static final int DRIVER_STATION_JOY = 0;
+        public static final double TRIGGER_THRESHOLD = 0.75;
+    }
+
+    public static final class LEDConstants {
+        public static final int ADDRESSABLE_LED = 0;
+        public static final int LED_COUNT = 180;
+    }
+
     public final static class IntakeConstants {
 
         public final static int INTAKE_FALCON = 19; //placeholder
@@ -55,12 +70,6 @@ public final class Constants {
         public static final int NECK_BEAMBREAK = 0;
 
     }
-
-    public final static class LEDConstants {
-        public static final int Addressable_LED = 9; //placeholder
-        public static final int LED_Count = 60; //placeholder 
-    }
-
 
     public static final class CalcConstants{
         //distance calc constants
