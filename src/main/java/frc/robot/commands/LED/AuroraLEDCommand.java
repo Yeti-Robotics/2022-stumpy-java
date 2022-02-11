@@ -25,7 +25,7 @@ public class AuroraLEDCommand extends CommandBase {
   private int[] darkBlue = {62, 0, 216};
   private int darkBlueMintGreenBoundary = LEDConstants.LED_COUNT / 2;
   
-  private int gradientLength = 4;
+  private int gradientLength = 8;
   private int[][] mintGreenPinkGradient = calcGradientColors(mintGreen, pink);
   private int[][] pinkLightBlueGradient = calcGradientColors(pink, lightBlue);
   private int[][] lightBlueDarkBlueGradient = calcGradientColors(lightBlue, darkBlue);
