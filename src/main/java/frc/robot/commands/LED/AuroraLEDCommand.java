@@ -55,22 +55,22 @@ public class AuroraLEDCommand extends CommandBase {
   }
 
   private int[][] calcGradientColors(int[] color1, int[] color2) {
-    var gradientColors = new int[gradientLength][3];
+    int[][] gradientColors = new int[gradientLength][3];
 
-    final int centerIndex = (gradientLength - 1) / 2;
+    final double centerIndex = (gradientLength - 1.0) / 2.0;
 
-    var leftColor = getAvgValue(color1, color2);
-    var rightColor = getAvgValue(color1, color2);
+    int[] leftColor = getAvgValue(color1, color2);
+    int[] rightColor = getAvgValue(color1, color2);
 
     // [[], [], [], []]
     // [[], [], [], [], [], [], []]
     // if odd num of gradient leds set the middle to avg of both sides
-    if (gradientLength % 2 != 0) gradientColors[centerIndex] = leftColor;
+    if (gradientLength % 2 != 0) gradientColors[(int) centerIndex] = leftColor;
 
-    for (var i = 0; i < Math.floor(gradientLength / 2); i++) {
+    for (int i = 0; i < Math.floor(gradientLength / 2.0); i++) {
       rightColor = getAvgValue(rightColor, color2);
       leftColor = getAvgValue(color1, leftColor);
-      var placementIndex = i + 1;
+      int placementIndex = i + 1;
       gradientColors[(int) Math.floor(centerIndex + placementIndex)] = rightColor;
       gradientColors[(int) Math.ceil(centerIndex - placementIndex)] = leftColor;
     }
@@ -88,7 +88,7 @@ public class AuroraLEDCommand extends CommandBase {
           ledSubsystem.setRGB(wrapValues(i), mintGreen[0], mintGreen[1], mintGreen[2]);
         }
         for (; i < mintGreenPinkBoundary + j + position; i++) {
-          // makes i zero for selecting each color out of the gradient
+          // makes i (0 through gradientLength - 1) for selecting each color out of the gradient
           int gradientPos = i - j - position - (mintGreenPinkBoundary - gradientLength);
           ledSubsystem.setRGB(wrapValues(i), mintGreenPinkGradient[gradientPos][0], mintGreenPinkGradient[gradientPos][1], mintGreenPinkGradient[gradientPos][2]);
         }

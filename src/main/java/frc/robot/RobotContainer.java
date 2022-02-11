@@ -37,10 +37,10 @@ public class RobotContainer {
     // The robot's subsystems and commands are defined here...
     private CommandScheduler commandScheduler;
     public Joystick driverStationJoystick;
-    private XboxController xboxController; 
     private XboxTrigger rightTrigger; 
     private XboxTrigger leftTrigger;
     public boolean isDriverStation;
+    private XboxController xboxController;
 
     public LEDSubsystem ledSubsystem;
     private HashMap<Integer, CommandBase> buttonMap;
@@ -55,6 +55,8 @@ public class RobotContainer {
 
         ledSubsystem = new LEDSubsystem();
         buttonMap = new HashMap<>();
+        int port = (DriverStation.getJoystickIsXbox(0)) ? 0 : 1;
+        xboxController = new XboxController(port); 
 
         ledSubsystem.setDefaultCommand(new SetLEDYetiBlueCommand(ledSubsystem));
         
@@ -79,8 +81,8 @@ public class RobotContainer {
                 Allowed buttons:
                 kA, kB, kBack, kBumperLeft, kBumperRight, kStart, kStickLeft, kStickRight, kX, kY (and triggers)
             */
-            int port = (DriverStation.getJoystickIsXbox(0)) ? 0 : 1;
-            xboxController = new XboxController(port); 
+            
+            
             rightTrigger = new XboxTrigger(xboxController, Hand.RIGHT);
             leftTrigger = new XboxTrigger(xboxController, Hand.LEFT);
             
