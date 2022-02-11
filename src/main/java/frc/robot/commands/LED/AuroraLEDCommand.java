@@ -14,18 +14,18 @@ public class AuroraLEDCommand extends CommandBase {
 
   // RGB
   private int[] mintGreen = {30, 222, 32};
-  private int mintGreenPinkBoundary = LEDConstants.LED_COUNT / 8;
+  private int mintGreenPinkBoundary = LEDConstants.LED_COUNT / 24;
   
   private int[] pink = {199, 68, 235};
-  private int pinkLightBlueBoundary = LEDConstants.LED_COUNT / 4;
+  private int pinkLightBlueBoundary = LEDConstants.LED_COUNT / 12;
   
   private int[] lightBlue = {4, 255, 219};
-  private int lightBlueDarkBlueBoundary = (3 * LEDConstants.LED_COUNT) / 8;
+  private int lightBlueDarkBlueBoundary = (3 * LEDConstants.LED_COUNT) / 24;
   
   private int[] darkBlue = {62, 0, 216};
-  private int darkBlueMintGreenBoundary = LEDConstants.LED_COUNT / 2;
+  private int darkBlueMintGreenBoundary = LEDConstants.LED_COUNT / 6;
   
-  private int gradientLength = 8;
+  private int gradientLength = 3;
   private int[][] mintGreenPinkGradient = calcGradientColors(mintGreen, pink);
   private int[][] pinkLightBlueGradient = calcGradientColors(pink, lightBlue);
   private int[][] lightBlueDarkBlueGradient = calcGradientColors(lightBlue, darkBlue);
@@ -82,7 +82,7 @@ public class AuroraLEDCommand extends CommandBase {
   @Override
   public void execute() {
     if (System.currentTimeMillis() - startTime >= waitTime) {
-      for (int j = 0; j < (LEDConstants.LED_COUNT / 2) + 1; j += (LEDConstants.LED_COUNT / 2)) {
+      for (int j = 0; j < LEDConstants.LED_COUNT + 1; j += (LEDConstants.LED_COUNT / 6)) {
         int i = 0;
         for (i = i + j + position; i < (mintGreenPinkBoundary - gradientLength) + j + position; i++) {
           ledSubsystem.setRGB(wrapValues(i), mintGreen[0], mintGreen[1], mintGreen[2]);
