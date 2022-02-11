@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    new AuroraLEDCommand(m_robotContainer.ledSubsystem).schedule();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
