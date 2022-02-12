@@ -18,7 +18,7 @@ public class LEDSubsystem extends SubsystemBase {
   public enum LEDStripStatus {
     OFF, ON
   }
-
+  
   public LEDStripStatus stripStatus;
 
   public LEDSubsystem() {
