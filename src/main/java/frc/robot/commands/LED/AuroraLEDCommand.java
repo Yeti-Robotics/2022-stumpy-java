@@ -10,31 +10,31 @@ import frc.robot.subsystems.LEDSubsystem;
 
 public class AuroraLEDCommand extends CommandBase {
   /** Creates a new AuroraLEDCommand. */
-  private LEDSubsystem ledSubsystem;
+  private final LEDSubsystem ledSubsystem;
 
   // RGB
-  private int[] mintGreen = {30, 222, 32};
-  private int mintGreenPinkBoundary = LEDConstants.LED_COUNT / 36;
+  private final int[] mintGreen = {30, 222, 32};
+  private final int mintGreenPinkBoundary = LEDConstants.LED_COUNT / 36;
   
-  private int[] pink = {199, 68, 235};
-  private int pinkLightBlueBoundary = LEDConstants.LED_COUNT / 18;
+  private final int[] pink = {199, 68, 235};
+  private final int pinkLightBlueBoundary = LEDConstants.LED_COUNT / 18;
   
-  private int[] lightBlue = {4, 255, 219};
-  private int lightBlueDarkBlueBoundary = (3 * LEDConstants.LED_COUNT) / 36;
+  private final int[] lightBlue = {4, 255, 219};
+  private final int lightBlueDarkBlueBoundary = (3 * LEDConstants.LED_COUNT) / 36;
+
+  private final int[] darkBlue = {62, 0, 216};
+  private final int darkBlueMintGreenBoundary = LEDConstants.LED_COUNT / 9;
   
-  private int[] darkBlue = {62, 0, 216};
-  private int darkBlueMintGreenBoundary = LEDConstants.LED_COUNT / 9;
-  
-  private int gradientLength = 3;
-  private int[][] mintGreenPinkGradient = calcGradientColors(mintGreen, pink);
-  private int[][] pinkLightBlueGradient = calcGradientColors(pink, lightBlue);
-  private int[][] lightBlueDarkBlueGradient = calcGradientColors(lightBlue, darkBlue);
-  private int[][] darkBlueMintGreenGradient = calcGradientColors(darkBlue, mintGreen);
+  private final int gradientLength = 3;
+  private final int[][] mintGreenPinkGradient = calcGradientColors(mintGreen, pink);
+  private final int[][] pinkLightBlueGradient = calcGradientColors(pink, lightBlue);
+  private final int[][] lightBlueDarkBlueGradient = calcGradientColors(lightBlue, darkBlue);
+  private final int[][] darkBlueMintGreenGradient = calcGradientColors(darkBlue, mintGreen);
 
   private int position = 0;
 
   private long startTime = System.currentTimeMillis();
-  private int waitTime = 50;
+  private final int waitTime = 50;
 
   public AuroraLEDCommand(LEDSubsystem ledSubsystem) {
     this.ledSubsystem = ledSubsystem;
