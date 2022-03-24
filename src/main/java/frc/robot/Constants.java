@@ -16,24 +16,36 @@ package frc.robot;
  */
 public final class Constants {
     public final static class DrivetrainConstants {
-        public final static int LEFT_MOTOR_1 = 13;
-        public final static int LEFT_MOTOR_2 = 16;
-        public final static int LEFT_MOTOR_3 = 7;
-        public final static int RIGHT_MOTOR_1 = 3;
-        public final static int RIGHT_MOTOR_2 = 8;
-        public final static int RIGHT_MOTOR_3 = 6;
+        public final static int LEFT_MOTOR_1 = 4;
+        public final static int LEFT_MOTOR_2 = 5;
+        public final static int LEFT_MOTOR_3 = 6;
+        public final static int RIGHT_MOTOR_1 = 1;
+        public final static int RIGHT_MOTOR_2 = 2;
+        public final static int RIGHT_MOTOR_3 = 3;
     
-        public static final int[] SHIFTER_SOLENOID = {6,7};
+        public static final int[] SHIFTER_SOLENOID = {2, 3};
     }
 
     public final static class IntakeConstants {
 
         public final static int INTAKE_FALCON = 19; //placeholder
-        public final static int[] INTAKE_PISTONS_SOLENOID = {0, 1};//placeholder
+        public final static int[] INTAKE_PISTONS_SOLENOID = {6, 7};//placeholder
 
         public final static double ROLL_IN_SPEED = 0.5;
         public final static double ROLL_OUT_SPEED = -0.5;
 
+    }
+
+    public final static class ClimberConstants {
+        public final static int CLIMBER_MOTOR_1 = 8;
+        public final static int CLIMBER_MOTOR_2 = 9;
+
+        public final static int[] LEAN_PISTON_SOLENOID = {0, 1};
+        public final static int[] AIR_BRAKE_SOLENOID = {4, 5};
+
+        public final static double CLIMBER_TOLERANCE = 15;
+        public final static double CLIMBER_UPPER_LIMIT = 70000.0;
+        public final static double CLIMBER_LOWER_LIMIT = 0.0;
     }
 
     public final static class   ShooterConstants {

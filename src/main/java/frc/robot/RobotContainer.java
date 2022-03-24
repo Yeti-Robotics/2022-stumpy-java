@@ -8,14 +8,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.AllInCommand;
-import frc.robot.commands.intake.IntakeStopCommand;
-import frc.robot.commands.intake.TestIntakeCommand;
-import frc.robot.commands.neck.RollToTop;
-import frc.robot.commands.shooter.SpinShooterCommand;
-import frc.robot.commands.shooter.TestShooterCommand;
+import frc.robot.commands.shifting.ToggleShiftCommand;
+import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeckSubsystem;
@@ -23,79 +20,96 @@ import frc.robot.subsystems.ShiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private DrivetrainSubsystem drivetrainSubsystem;
-  private Joystick driverStationJoy;
+    private DrivetrainSubsystem drivetrainSubsystem;
+    private Joystick driverStationJoy;
 
-  public ShiftSubsystem shiftSubsystem;
-  private IntakeSubsystem intakeSubsystem;
-  private ShooterSubsystem shooterSubsystem;
-  public NeckSubsystem neckSubsystem;
+    public ShiftSubsystem shiftSubsystem;
+    private IntakeSubsystem intakeSubsystem;
+    private ShooterSubsystem shooterSubsystem;
+    public NeckSubsystem neckSubsystem;
+    public ClimberSubsystem climberSubsystem;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    driverStationJoy = new Joystick(0);
-    
-    drivetrainSubsystem = new DrivetrainSubsystem();
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        driverStationJoy = new Joystick(0);
+        drivetrainSubsystem = new DrivetrainSubsystem();
+        shiftSubsystem = new ShiftSubsystem();
+        intakeSubsystem = new IntakeSubsystem();
+        shooterSubsystem = new ShooterSubsystem();
+        neckSubsystem = new NeckSubsystem();
+        climberSubsystem = new ClimberSubsystem();
 
-    drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
-    
-    shiftSubsystem = new ShiftSubsystem();
-    intakeSubsystem = new IntakeSubsystem();
-    shooterSubsystem = new ShooterSubsystem();
-    neckSubsystem = new NeckSubsystem();
+        switch (drivetrainSubsystem.getDriveMode()) {
+            case TANK:
+                drivetrainSubsystem.setDefaultCommand(
+                        new RunCommand(() -> drivetrainSubsystem.tankDrive(getLeftY(), getRightY()),
+                                drivetrainSubsystem));
+                break;
+            case CHEEZY:
+                drivetrainSubsystem.setDefaultCommand(
+                        new RunCommand(() -> drivetrainSubsystem.cheezyDrive(getLeftY(), getRightX()),
+                                drivetrainSubsystem));
+                break;
+            case ARCADE:
+                drivetrainSubsystem.setDefaultCommand(
+                        new RunCommand(() -> drivetrainSubsystem.arcadeDrive(getLeftY(), getRightX()),
+                                drivetrainSubsystem));
+                break;
+        }
 
-    configureButtonBindings();
-  }
+        configureButtonBindings();
+    }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+     * it to a {@link
+     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
+        setJoystickButtonWhenPressed(driverStationJoy, 12, new ToggleShiftCommand(shiftSubsystem));
 
-      setJoystickButtonWhileHeld(driverStationJoy, 2, new TestIntakeCommand(intakeSubsystem, 0.5));
-       setJoystickButtonWhileHeld(driverStationJoy, 7, new TestIntakeCommand(intakeSubsystem, -0.5));
-        setJoystickButtonWhileHeld(driverStationJoy, 1,  new RollToTop(neckSubsystem, intakeSubsystem));
-        setJoystickButtonWhileHeld(driverStationJoy, 6, new AllInCommand(neckSubsystem, intakeSubsystem));
-        setJoystickButtonWhenPressed(driverStationJoy, 3, new IntakeStopCommand(intakeSubsystem));
-        // setJoystickButtonWhileHeld(driverStationJoy, 3, new RollToTop(neckSubsystem,intakeSubsystem));
-      // setJoystickButtonWhileHeld(driverStationJoy, 8, new RollToBottom(neckSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 6, new RunCommand(() -> climberSubsystem.climbUp(), climberSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 1, new RunCommand(() -> climberSubsystem.climbDown(), climberSubsystem));
 
-      // setJoystickButtonWhenPressed(driverStationJoy, 11, new ToggleShiftCommand(shiftSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoy, 2, new InstantCommand(() -> climberSubsystem.toggleClimberLean(), climberSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoy, 7, new InstantCommand(() -> climberSubsystem.toggleAirBrake(), climberSubsystem));
+    }
 
-      setJoystickButtonWhileHeld(driverStationJoy, 5, new TestShooterCommand(shooterSubsystem, 0.5));
-      setJoystickButtonWhileHeld(driverStationJoy, 7, new SpinShooterCommand(shooterSubsystem));
-  }
-  
-  
-  public double getLeftY() {
-      return -driverStationJoy.getRawAxis(0);
-  }
+    public double getLeftY() {
+        return -driverStationJoy.getRawAxis(0);
+    }
 
-  public double getLeftX() {
-      return driverStationJoy.getRawAxis(1);
-  }
+    public double getLeftX() {
+        return driverStationJoy.getRawAxis(1);
+    }
 
-  public double getRightY() {
-      return -driverStationJoy.getRawAxis(2);
-  }
+    public double getRightY() {
+        return -driverStationJoy.getRawAxis(2);
+    }
 
-  public double getRightX() {
-      return driverStationJoy.getRawAxis(3);
-  }
+    public double getRightX() {
+        return -driverStationJoy.getRawAxis(3);
+    }
 
-  private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
-    new JoystickButton(driverStationJoy, i).whenPressed(command);
-  }
-  private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
-    new JoystickButton(driverStationJoy, i).whileHeld(command);
-  }
+    private void setJoystickButtonWhenPressed(Joystick driverStationJoy, int i, Command command) {
+        new JoystickButton(driverStationJoy, i).whenPressed(command);
+    }
+
+    private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
+        new JoystickButton(driverStationJoy, i).whileHeld(command);
+    }
 }
