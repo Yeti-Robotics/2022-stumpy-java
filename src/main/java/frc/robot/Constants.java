@@ -36,6 +36,17 @@ public final class Constants {
 
     }
 
+    public static final class OIConstants{
+        //joystick ports (only 2 axis for each joystick)
+        public static final int RIGHT_JOYSTICK = 1;
+        public static final int LEFT_JOYSTICK = 0;
+        public static final int SECONDARY_JOYSTICK = 2;
+
+        //driverstation port (the whole thing is one joystick, we read from four axis)
+        public static final int DRIVER_STATION_JOY = 0;
+        public static final int CLIMBER_JOY = 1;
+        public static final double TRIGGER_THRESHOLD = 0.75;
+    }
     public final static class ClimberConstants {
         public final static int CLIMBER_MOTOR_1 = 8;
         public final static int CLIMBER_MOTOR_2 = 9;

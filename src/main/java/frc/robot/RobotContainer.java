@@ -4,12 +4,16 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -18,6 +22,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.NeckSubsystem;
 import frc.robot.subsystems.ShiftSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.XboxSubsystem;
+import frc.robot.utils.XController;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -37,18 +43,23 @@ public class RobotContainer {
     private ShooterSubsystem shooterSubsystem;
     public NeckSubsystem neckSubsystem;
     public ClimberSubsystem climberSubsystem;
-
+    private XController xboxController;
+    private boolean isDriverStation;
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
      */
+
     public RobotContainer() {
-        driverStationJoy = new Joystick(0);
+        driverStationJoy = new Joystick(Constants.OIConstants.DRIVER_STATION_JOY);
+    
         drivetrainSubsystem = new DrivetrainSubsystem();
         shiftSubsystem = new ShiftSubsystem();
         intakeSubsystem = new IntakeSubsystem();
         shooterSubsystem = new ShooterSubsystem();
         neckSubsystem = new NeckSubsystem();
         climberSubsystem = new ClimberSubsystem();
+
+        isDriverStation = !(DriverStation.getJoystickIsXbox(0) || DriverStation.getJoystickIsXbox(1));
 
         switch (drivetrainSubsystem.getDriveMode()) {
             case TANK:
@@ -82,11 +93,18 @@ public class RobotContainer {
     private void configureButtonBindings() {
         setJoystickButtonWhenPressed(driverStationJoy, 12, new ToggleShiftCommand(shiftSubsystem));
 
-        setJoystickButtonWhileHeld(driverStationJoy, 6, new RunCommand(() -> climberSubsystem.climbUp(), climberSubsystem));
-        setJoystickButtonWhileHeld(driverStationJoy, 1, new RunCommand(() -> climberSubsystem.climbDown(), climberSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 6, new StartEndCommand(() -> climberSubsystem.climbUp(),() -> climberSubsystem.stopClimb(), climberSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 1, new StartEndCommand(() -> climberSubsystem.climbDown(),() -> climberSubsystem.stopClimb(), climberSubsystem));
+
 
         setJoystickButtonWhenPressed(driverStationJoy, 2, new InstantCommand(() -> climberSubsystem.toggleClimberLean(), climberSubsystem));
         setJoystickButtonWhenPressed(driverStationJoy, 7, new InstantCommand(() -> climberSubsystem.toggleAirBrake(), climberSubsystem));
+
+        setXboxButtonWhileHeld(xboxController , Button.kY, new StartEndCommand(() -> climberSubsystem.climbUp(),() -> climberSubsystem.stopClimb(), climberSubsystem));
+        setXboxButtonWhileHeld(xboxController, Button.kX, new StartEndCommand(() -> climberSubsystem.climbDown(),() -> climberSubsystem.stopClimb(), climberSubsystem));
+
+        setXboxButtonWhenPressed(xboxController, Button.kA, new InstantCommand(() -> climberSubsystem.toggleClimberLean(), climberSubsystem));
+        setXboxButtonWhenPressed(xboxController, Button.kB,  new InstantCommand(() -> climberSubsystem.toggleAirBrake(), climberSubsystem));
     }
 
     public double getLeftY() {
@@ -112,4 +130,11 @@ public class RobotContainer {
     private void setJoystickButtonWhileHeld(Joystick driverStationJoy, int i, Command command) {
         new JoystickButton(driverStationJoy, i).whileHeld(command);
     }
+    private void setXboxButtonWhenPressed(XboxController xboxController, Button button, CommandBase command) {
+        new JoystickButton(xboxController, button.value).whenPressed(command);
+    
+    }
+    private void setXboxButtonWhileHeld(XboxController xboxController, XboxController.Button button, CommandBase command) {
+        new JoystickButton(xboxController, button.value).whileHeld(command);
+      }
 }
