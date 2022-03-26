@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ClimbDownCommand;
+import frc.robot.commands.ClimbUpCommand;
 import frc.robot.commands.shifting.ToggleShiftCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -51,6 +53,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         driverStationJoy = new Joystick(Constants.OIConstants.DRIVER_STATION_JOY);
+        xboxController = new XController(0);
     
         drivetrainSubsystem = new DrivetrainSubsystem();
         shiftSubsystem = new ShiftSubsystem();
@@ -93,11 +96,11 @@ public class RobotContainer {
     private void configureButtonBindings() {
         setJoystickButtonWhenPressed(driverStationJoy, 12, new ToggleShiftCommand(shiftSubsystem));
 
-        setJoystickButtonWhileHeld(driverStationJoy, 6, new StartEndCommand(() -> climberSubsystem.climbUp(),() -> climberSubsystem.stopClimb(), climberSubsystem));
-        setJoystickButtonWhileHeld(driverStationJoy, 1, new StartEndCommand(() -> climberSubsystem.climbDown(),() -> climberSubsystem.stopClimb(), climberSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 3, new ClimbUpCommand(climberSubsystem));
+        setJoystickButtonWhileHeld(driverStationJoy, 2, new ClimbDownCommand(climberSubsystem));
 
 
-        setJoystickButtonWhenPressed(driverStationJoy, 2, new InstantCommand(() -> climberSubsystem.toggleClimberLean(), climberSubsystem));
+        setJoystickButtonWhenPressed(driverStationJoy, 1, new InstantCommand(() -> climberSubsystem.toggleClimberLean(), climberSubsystem));
         setJoystickButtonWhenPressed(driverStationJoy, 7, new InstantCommand(() -> climberSubsystem.toggleAirBrake(), climberSubsystem));
 
         setXboxButtonWhileHeld(xboxController , Button.kY, new StartEndCommand(() -> climberSubsystem.climbUp(),() -> climberSubsystem.stopClimb(), climberSubsystem));

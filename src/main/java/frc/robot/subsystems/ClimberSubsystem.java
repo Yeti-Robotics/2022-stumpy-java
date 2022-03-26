@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -43,18 +44,23 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void climbUp() {
-        if (climberAirBrake.get() == Value.kReverse && !atEncoderLimit()) {
-          climberMotor1.set(0.3);
-        } else {
-            stopClimb();
-        }
+        if (
+        getAverageEncoderPosition() <= ( ClimberConstants.CLIMBER_UPPER_LIMIT )) {
+      climberMotor1.set(ControlMode.PercentOutput, ClimberConstants.CLIMB_SPEED);
+      climberMotor2.set(ControlMode.PercentOutput, ClimberConstants.CLIMB_SPEED);
+    } else {
+      stopClimb();
+    }
+
     }    
     
     public void climbDown() {
-        if (climberAirBrake.get() == Value.kReverse && !atEncoderLimit()) {
-            climberMotor1.set(0.3);
+        if (
+            getAverageEncoderPosition() >= ( ClimberConstants.CLIMBER_LOWER_LIMIT )) {
+          climberMotor1.set(ControlMode.PercentOutput, -ClimberConstants.CLIMB_SPEED);
+          climberMotor2.set(ControlMode.PercentOutput, -ClimberConstants.CLIMB_SPEED);
         } else {
-            stopClimb();
+          stopClimb();
         }
     }
 
